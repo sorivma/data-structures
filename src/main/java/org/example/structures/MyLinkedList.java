@@ -1,11 +1,28 @@
 package org.example.structures;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class MyLinkedList<T> {
+import java.util.Comparator;
+import java.util.Iterator;
+
+public class MyLinkedList<T> implements Iterable<T> {
     private int size = 0;
     private Node<T> first;
     private Node<T> last;
+    private final Iterator<T> linkedListIterator = new Iterator<>() {
+        int pointer = -1;
+
+        @Override
+        public boolean hasNext() {
+            return pointer < size() - 1;
+        }
+
+        @Override
+        public T next() {
+            return get(++pointer);
+        }
+    };
 
     public MyLinkedList() {
     }
@@ -41,12 +58,6 @@ public class MyLinkedList<T> {
             return;
         }
 
-        // Если последней ноды нет то она просто становится ей
-        if (last == null) {
-            newNode.previous = first;
-            last = newNode;
-            return;
-        }
 
         // Если она есть то она заменяет ее
         newNode.previous = last;
@@ -152,7 +163,7 @@ public class MyLinkedList<T> {
             return last.item;
         }
 
-        return findNode(pos+1).item;
+        return findNode(pos + 1).item;
     }
 
     public void update(int pos, T t) {
@@ -168,7 +179,7 @@ public class MyLinkedList<T> {
             return;
         }
 
-        findNode(pos+1).item = t;
+        findNode(pos + 1).item = t;
     }
 
     public int size() {
@@ -213,6 +224,37 @@ public class MyLinkedList<T> {
             nodeAtPosition = nodeAtPosition.next;
         }
         return nodeAtPosition;
+    }
+
+    @NotNull
+    @Override
+    public Iterator<T> iterator() {
+        return linkedListIterator;
+    }
+
+    public void sort(Comparator<T> comparator) {
+        Node<T> start = first;
+
+        if (start == null) {
+            return;
+        }
+
+        Node<T> index;
+        T temp;
+        while (start != null) {
+            index = start.next;
+
+            while (index != null) {
+                if (comparator.compare(start.item, index.item) >= 0) {
+                    temp = start.item;
+                    start.item = index.item;
+                    index.item = temp;
+                }
+
+                index = index.next;
+            }
+            start = start.next;
+        }
     }
 
 

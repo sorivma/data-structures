@@ -1,13 +1,15 @@
-package org.example;
+package org.example.structures;
 
-import org.example.structures.MyLinkedList;
-import org.example.structures.MyStack;
+import org.example.Minion;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class Main {
+class ThirdLabDemo {
+    private MyStack<Minion> minionStack;
+    private MyLinkedList<Minion> minionLinkedList;
 
-    private static MyStack<Minion> minionStack = new MyStack<>(5);
-    private static MyLinkedList<Minion> minionLinkedList = new MyLinkedList<>();
-    public static void populateCollections() {
+    @BeforeEach
+    public void populateCollections() {
         minionStack = new MyStack<>(5);
         minionLinkedList = new MyLinkedList<>();
 
@@ -30,12 +32,13 @@ public class Main {
             minionLinkedList.addLast(minion);
         }
     }
-    public static void main(String[] args) {
-        populateCollections();
+
+    @Test
+    void stackDemo() {
         System.out.println("==Изначальное состояние стэка==");
         System.out.println(minionStack);
         System.out.println("Размер: " + minionStack.size());
-        Minion test = new Minion("Тест", "Тест", 1000);
+        Minion test = new Minion("Тест", "Тест", 10000);
         System.out.println("Добавим миньона: " + test);
         minionStack.push(test);
         System.out.println("==Стэк после добавления миньона==");
