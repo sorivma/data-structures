@@ -1,4 +1,4 @@
-package org.example.structures;
+package org.example.structures.arrays;
 
 import java.util.Comparator;
 import java.util.Iterator;

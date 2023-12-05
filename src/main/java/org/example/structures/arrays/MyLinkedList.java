@@ -1,4 +1,4 @@
-package org.example.structures;
+package org.example.structures.arrays;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

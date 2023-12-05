@@ -1,5 +1,6 @@
 package org.example.structures;
 
+import org.example.structures.arrays.MyLinkedList;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

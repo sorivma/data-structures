@@ -1,6 +1,8 @@
 package org.example.structures;
 
 import org.example.Minion;
+import org.example.structures.arrays.MyLinkedList;
+import org.example.structures.arrays.MyStack;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

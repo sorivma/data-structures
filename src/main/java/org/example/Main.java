@@ -1,79 +1,102 @@
 package org.example;
 
-import org.example.structures.MyLinkedList;
-import org.example.structures.MyStack;
+import org.example.structures.trees.BinaryTreeImpl;
+import org.example.structures.trees.SearchBinaryTree;
+import org.example.structures.trees.SearchTree;
+
+import java.util.List;
 
 public class Main {
-
-    private static MyStack<Minion> minionStack = new MyStack<>(5);
-    private static MyLinkedList<Minion> minionLinkedList = new MyLinkedList<>();
-    public static void populateCollections() {
-        minionStack = new MyStack<>(5);
-        minionLinkedList = new MyLinkedList<>();
-
-
-        Minion[] minions = new Minion[]{
-                new Minion("Jeb", "Worker", 1000000),
-                new Minion("Pablo", "Dealer", 12000),
-                new Minion("Stierlitz", "Soivet spy", 10),
-                new Minion("Gringo", "American", 14),
-                new Minion("Bob", "Wrench Master", 15),
-                new Minion("Gabe", "Steam dada", 15),
-                new Minion("Sus", "Traitor", 17),
-                new Minion("Bob", "Tech", 100),
-                new Minion("Gleb", "Student", 120),
-                new Minion("Todler", "Baby", 0),
-        };
-
-        for (Minion minion : minions) {
-            minionStack.push(minion);
-            minionLinkedList.addLast(minion);
-        }
+    public static BinaryTreeImpl<Integer> prepareTree() {
+        return new BinaryTreeImpl<>(
+                new BinaryTreeImpl<>(
+                        new BinaryTreeImpl<>(
+                                null,
+                                null,
+                                4
+                        ),
+                        new BinaryTreeImpl<>(
+                                null,
+                                null,
+                                4),
+                        13),
+                new BinaryTreeImpl<>(
+                        new BinaryTreeImpl<>(
+                                null,
+                                null,
+                                16
+                        ),
+                        new BinaryTreeImpl<>(
+                                null,
+                                null,
+                                17
+                        ),
+                        9),
+                5);
     }
+
     public static void main(String[] args) {
-        populateCollections();
-        System.out.println("==Изначальное состояние стэка==");
-        System.out.println(minionStack);
-        System.out.println("Размер: " + minionStack.size());
-        Minion test = new Minion("Тест", "Тест", 1000);
-        System.out.println("Добавим миньона: " + test);
-        minionStack.push(test);
-        System.out.println("==Стэк после добавления миньона==");
-        System.out.println(minionStack);
-        System.out.println("Размер: " + minionStack.size());
-        System.out.println("==Заберем верхний элемент из стэка==");
-        System.out.println("==Полученный элемент==" + minionStack.pop());
-        System.out.println("==Состояние стэка==");
-        System.out.println(minionStack);
-        System.out.println("Размер: " + minionStack.size());
-        System.out.println();
-        System.out.println("==Проверка итераторов Связанного списка и стэка==");
-        System.out.println("Проверка для стэка");
-        for (Minion minion : minionStack) {
-            System.out.println("Значение метода hasNext(): " + "true");
-            System.out.println("Значение метода next(): " + minion);
+        BinaryTreeImpl<Integer> binaryTree = prepareTree();
+        System.out.println("Первое задание");
+        System.out.println("Так выглядит дерево");
+        binaryTree.print();
+        System.out.println("asIndentedPreOrder до уровня 2");
+        System.out.println(binaryTree.asIndentedPreOrder(2));
+        System.out.println("asIndentedPreOrder до уровня 3");
+        System.out.println(binaryTree.asIndentedPreOrder(3));
+        System.out.println("Дерево в preOrder порядке");
+        binaryTree.preOrder().forEach(tree -> {
+            tree.print();
+            System.out.println("===================");
+        });
+        System.out.println("Дерево в inOrder порядке");
+        binaryTree.inOrder().forEach(tree -> {
+            tree.print();
+            System.out.println("===================");
+        });
+        System.out.println("Дерево в postOrder порядке");
+        binaryTree.postOrder().forEach(tree -> {
+            tree.print();
+            System.out.println("===================");
+        });
+        System.out.println("Печать элементов с помощью consumer forEachInOrder");
+        binaryTree.forEachInOrder(System.out::println);
+        System.out.println("Второе задание, печать в ширину и глубину");
+        System.out.println("Так выглядит дерево");
+        binaryTree.print();
+        System.out.println("===BFS===");
+        binaryTree.bfsTraversal();
+        System.out.println("===DFS===");
+        binaryTree.dfsTraversal();
+
+        System.out.println("Третье задание");
+        System.out.println("Так выглядит дерево поиска");
+        SearchTree<Integer> searchTree = new SearchTree<>();
+        searchTree.insert(15);
+        searchTree.insert(83);
+        searchTree.insert(12);
+        searchTree.insert(14);
+        searchTree.insert(51);
+        searchTree.insert(-4);
+        searchTree.insert(6);
+        searchTree.print();
+//        int num = -5;
+//        System.out.println("Результат проверки на присутствие " + num + " в дереве: " + searchTree.contains(num));
+//        System.out.println("Так выгядит найденное поддерево для " + num);
+//        searchTree.search(num).print();
+//        System.out.println("Спец. задание - найти дубликаты в списке чисел с помощью дерева поиска");
+        List<Integer> integers = List.of(1, 2, 4, 4, 6, 7, 9, 9, 7, 7, 5, 5, 4, 4, 3, 3, 1, 1, 2, 99, 25);
+        System.out.println("Даны числа: " + integers);
+
+
+
+
+        SearchBinaryTree<Integer> searchBinaryTree = new SearchTree<>();
+        for (int number : integers) {
+            if (searchBinaryTree.contains(number)) {
+                System.out.println("Найден дубликат: " + number);
+            }
+            searchBinaryTree.insert(number);
         }
-        System.out.println("Значение метода hasNext(): " + "false");
-        System.out.println("Проверка для связанного списка");
-        for (Minion minion: minionLinkedList) {
-            System.out.println("Значение метода hasNext(): " + "true");
-            System.out.println("Значение метода next(): " + minion);
-        }
-        System.out.println("Значение метода next(): " + "false");
-        System.out.println();
-        System.out.println("Проверка сортировки связанного списка и стека");
-        System.out.println("==Изначальное состояние связанного списка");
-        System.out.println(minionLinkedList);
-        System.out.println("==Отсортированный связанный список по именам миньонов");
-        minionLinkedList.sort(new Minion.NameComparator());
-        System.out.println(minionLinkedList);
-        System.out.println("==Изначальное состояние стэка==");
-        System.out.println(minionStack);
-        minionStack.sort(new Minion.NameComparator());
-        System.out.println("==Отсортированный стэк по имени миньонов");
-        System.out.println(minionStack);
-        System.out.println("==Отсортированный LinkedList по гласным в наименовании работы, возрасту, длине имени");
-        minionLinkedList.sort(new Minion.AgeComparator());
-        System.out.println(minionLinkedList);
     }
 }

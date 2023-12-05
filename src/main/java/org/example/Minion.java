@@ -1,8 +1,10 @@
 package org.example;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Comparator;
 
-public class Minion {
+public class Minion implements Comparable<Minion> {
     private final String name;
     private final String job;
     private final Integer age;
@@ -11,6 +13,11 @@ public class Minion {
         this.name = name;
         this.job = job;
         this.age = age;
+    }
+
+    @Override
+    public int compareTo(@NotNull Minion o) {
+        return this.age - o.age;
     }
 
     public static class NameComparator implements Comparator<Minion> {
@@ -42,8 +49,8 @@ public class Minion {
             sum1 += o1.age;
             sum2 += o2.age;
 
-            sum1+=countVowels(o1.job + o1.name);
-            sum2+=countVowels(o2.job + o2.name);
+            sum1 += countVowels(o1.job + o1.name);
+            sum2 += countVowels(o2.job + o2.name);
 
             return sum1 - sum2;
         }
@@ -53,7 +60,7 @@ public class Minion {
             String vowels = "aeiouAEIOU";
 
             for (int i = 0; i < name.length(); i++) {
-                if (vowels.contains(String.valueOf(name.charAt(i)))){
+                if (vowels.contains(String.valueOf(name.charAt(i)))) {
                     count++;
                 }
             }
