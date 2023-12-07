@@ -1,12 +1,17 @@
 package org.example.structures.heap;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MaxBinHeap <E extends Comparable<E>> implements Heap<E>{
-    private final ArrayList<E> elements;
+    protected final ArrayList<E> elements;
 
     public MaxBinHeap() {
         this.elements = new ArrayList<>();
+    }
+
+    protected MaxBinHeap(ArrayList<E> elements) {
+        this.elements = elements;
     }
 
     @Override
@@ -17,14 +22,13 @@ public class MaxBinHeap <E extends Comparable<E>> implements Heap<E>{
     @Override
     public void add(E element) {
         elements.add(element);
-        this.heapifyUp();
+        this.heapifyUp(elements.size() - 1);
     }
 
-    private void heapifyUp() {
-        int index = elements.size() - 1;
-        while (index > 0 && elements.get(index).compareTo(elements.get(parent(index))) > 0) {
-            swap(index, parent(index));
-            index = parent(index);
+    protected void heapifyUp(int heapyfyIndex) {
+        while (heapyfyIndex > 0 && elements.get(heapyfyIndex).compareTo(elements.get(parent(heapyfyIndex))) > 0) {
+            swap(heapyfyIndex, parent(heapyfyIndex));
+            heapyfyIndex = parent(heapyfyIndex);
         }
     }
 
@@ -46,8 +50,9 @@ public class MaxBinHeap <E extends Comparable<E>> implements Heap<E>{
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
+        builder.append("MaxBinHeap: ");
         for (E element : elements) {
-            builder.append(element).append(" ");
+            builder.append("\n").append("   ").append(element);
         }
 
         return builder.toString().trim();

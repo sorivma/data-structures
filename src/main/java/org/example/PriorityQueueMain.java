@@ -6,7 +6,9 @@ public class PriorityQueueMain {
     private final static PriorityQueue<Minion> priorityQueue = new PriorityQueue<>();
 
     public static void initQueue() {
+        priorityQueue.add(new Minion("Stuart", "Builder", 10000));
         priorityQueue.add(new Minion("Bob", "Builder", 20));
+        priorityQueue.add(new Minion("Kevin", "Builder", 23));
         priorityQueue.add(new Minion("Stuart", "Builder", 18));
         priorityQueue.add(new Minion("Kevin", "Builder", 19));
         priorityQueue.add(new Minion("Dave", "Builder", 21));
